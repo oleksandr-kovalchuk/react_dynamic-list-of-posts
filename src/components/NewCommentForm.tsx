@@ -18,14 +18,12 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
   onAddComment,
   onCancel,
 }) => {
-  // Form state
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Validate all form fields and return any errors
   const validateForm = (): FormErrors => {
     const validationErrors: FormErrors = {};
 
@@ -47,7 +45,6 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Validate form before submission
     const formErrors = validateForm();
 
     if (Object.keys(formErrors).length > 0) {
@@ -60,13 +57,11 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
     setErrors({});
 
     try {
-      // Submit comment to server
       const commentData = { postId, name, email, body };
       const newComment = await client.post<Comment>('/comments', commentData);
 
-      // Update UI and reset form fields
       onAddComment(newComment);
-      setBody(''); // Only clear the body, keep author info for potential additional comments
+      setBody('');
     } catch (err) {
       setErrors({ form: 'Failed to add comment' });
     } finally {
@@ -74,7 +69,6 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
     }
   };
 
-  // Clear all form fields and errors
   const handleClear = () => {
     setName('');
     setEmail('');
@@ -82,7 +76,6 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
     setErrors({});
   };
 
-  // Helper function to render field errors
   const renderFieldError = (fieldName: string) =>
     errors[fieldName] ? (
       <p className="help is-danger" data-cy="ErrorMessage">
@@ -90,12 +83,10 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
       </p>
     ) : null;
 
-  // Helper for handling input changes
   const handleInputChange = (
     field: 'name' | 'email' | 'body',
     value: string,
   ) => {
-    // Update field value
     if (field === 'name') {
       setName(value);
     }
@@ -108,7 +99,6 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
       setBody(value);
     }
 
-    // Clear error for this field
     if (errors[field]) {
       setErrors(prevErrors => {
         const newErrors = { ...prevErrors };
@@ -122,7 +112,6 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
 
   return (
     <form data-cy="NewCommentForm" onSubmit={handleSubmit}>
-      {/* Name field */}
       <div className="field" data-cy="NameField">
         <label className="label" htmlFor="comment-author-name">
           Author Name
@@ -155,7 +144,6 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
         {renderFieldError('name')}
       </div>
 
-      {/* Email field */}
       <div className="field" data-cy="EmailField">
         <label className="label" htmlFor="comment-author-email">
           Author Email
@@ -188,7 +176,6 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
         {renderFieldError('email')}
       </div>
 
-      {/* Comment body field */}
       <div className="field" data-cy="BodyField">
         <label className="label" htmlFor="comment-body">
           Comment Text
@@ -208,7 +195,6 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
         {renderFieldError('body')}
       </div>
 
-      {/* Form buttons */}
       <div className="field is-grouped">
         <div className="control">
           <button
@@ -243,7 +229,6 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
         </div>
       </div>
 
-      {/* Form-level error message */}
       {errors.form && (
         <div className="notification is-danger" data-cy="FormError">
           {errors.form}

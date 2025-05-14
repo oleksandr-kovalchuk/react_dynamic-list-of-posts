@@ -13,7 +13,6 @@ import { PostDetails } from './components/PostDetails';
 import { Loader } from './components/Loader';
 
 export const App: React.FC = () => {
-  // State declarations
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
@@ -21,7 +20,6 @@ export const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch users on initial load
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -36,9 +34,7 @@ export const App: React.FC = () => {
     fetchUsers();
   }, []);
 
-  // Fetch posts when selected user changes
   useEffect(() => {
-    // Reset posts when no user is selected
     if (selectedUserId === null) {
       setPosts([]);
       setSelectedPostId(null);
@@ -56,7 +52,6 @@ export const App: React.FC = () => {
 
         setPosts(fetchedPosts);
 
-        // Check if the currently selected post is still available
         const isSelectedPostStillAvailable =
           selectedPostId !== null &&
           fetchedPosts.some(post => post.id === selectedPostId);
@@ -74,19 +69,16 @@ export const App: React.FC = () => {
     fetchPosts();
   }, [selectedUserId, selectedPostId]);
 
-  // Event handlers
   const handleUserSelect = (userId: number | null) => {
     setSelectedUserId(userId);
   };
 
   const handlePostSelect = (postId: number) => {
-    // Toggle post selection
     const shouldDeselectPost = postId === selectedPostId;
 
     setSelectedPostId(shouldDeselectPost ? null : postId);
   };
 
-  // Derived state
   const selectedPost = posts.find(post => post.id === selectedPostId) || null;
   const hasError = !!error;
   const isUserSelected = selectedUserId !== null;
@@ -98,7 +90,6 @@ export const App: React.FC = () => {
     <main className="section">
       <div className="container">
         <div className="tile is-ancestor">
-          {/* Left panel */}
           <div className="tile is-parent">
             <div className="tile is-child box is-success">
               <div className="block">
@@ -142,7 +133,6 @@ export const App: React.FC = () => {
             </div>
           </div>
 
-          {/* Right panel - Post details */}
           <div
             data-cy="Sidebar"
             className={classNames(

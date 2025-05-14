@@ -17,11 +17,9 @@ export const UserSelector: React.FC<UserSelectorProps> = ({
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Find selected user's name or use default
   const selectedUser = users.find(user => user.id === selectedUserId);
   const displayName = selectedUser?.name || 'Choose a user';
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const wasClickInside = dropdownRef.current?.contains(

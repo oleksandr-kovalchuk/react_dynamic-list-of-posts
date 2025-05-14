@@ -16,7 +16,6 @@ export const PostDetails: React.FC<PostDetailsProps> = ({ post, onClose }) => {
   const [error, setError] = useState<string | null>(null);
   const [isCommentFormVisible, setIsCommentFormVisible] = useState(false);
 
-  // Fetch comments when post changes
   useEffect(() => {
     const fetchComments = async () => {
       setIsLoading(true);
@@ -39,12 +38,10 @@ export const PostDetails: React.FC<PostDetailsProps> = ({ post, onClose }) => {
   }, [post.id]);
 
   const handleDeleteComment = (commentId: number) => {
-    // Optimistically remove comment from UI
     setComments(prevComments =>
       prevComments.filter(comment => comment.id !== commentId),
     );
 
-    // Delete from server
     client.delete(`/comments/${commentId}`).catch(() => {
       setError('Failed to delete comment on server');
     });
@@ -54,7 +51,6 @@ export const PostDetails: React.FC<PostDetailsProps> = ({ post, onClose }) => {
     setComments(prevComments => [...prevComments, newComment]);
   };
 
-  // Derived state
   const hasComments = comments.length > 0;
   const hasError = !!error;
   const shouldShowComments = !isLoading && !hasError && hasComments;
@@ -62,7 +58,6 @@ export const PostDetails: React.FC<PostDetailsProps> = ({ post, onClose }) => {
 
   return (
     <div className="content" data-cy="PostDetails">
-      {/* Post info */}
       <div className="block">
         <h2 data-cy="PostTitle">
           #{post.id}: {post.title}
@@ -79,7 +74,6 @@ export const PostDetails: React.FC<PostDetailsProps> = ({ post, onClose }) => {
         </button>
       </div>
 
-      {/* Comments section */}
       <div className="block">
         {isLoading && <Loader />}
 
@@ -127,7 +121,6 @@ export const PostDetails: React.FC<PostDetailsProps> = ({ post, onClose }) => {
           </>
         )}
 
-        {/* Comment form toggle button */}
         {!isLoading && !hasError && !isCommentFormVisible && (
           <button
             data-cy="WriteCommentButton"
@@ -139,7 +132,6 @@ export const PostDetails: React.FC<PostDetailsProps> = ({ post, onClose }) => {
           </button>
         )}
 
-        {/* Comment form */}
         {isCommentFormVisible && (
           <NewCommentForm
             postId={post.id}
