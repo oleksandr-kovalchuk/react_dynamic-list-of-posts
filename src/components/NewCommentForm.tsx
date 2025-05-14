@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import classNames from 'classnames';
 import { client } from '../utils/fetchClient';
 import { Comment } from '../types/Comment';
 
@@ -126,18 +127,21 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
         <label className="label" htmlFor="comment-author-name">
           Author Name
         </label>
+
         <div className="control has-icons-left has-icons-right">
           <input
             id="comment-author-name"
             name="name"
             placeholder="Name Surname"
-            className={`input ${errors.name ? 'is-danger' : ''}`}
+            className={classNames('input', { 'is-danger': errors.name })}
             value={name}
             onChange={e => handleInputChange('name', e.target.value)}
           />
+
           <span className="icon is-small is-left">
             <i className="fas fa-user" />
           </span>
+
           {errors.name && (
             <span
               className="icon is-small is-right has-text-danger"
@@ -147,6 +151,7 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
             </span>
           )}
         </div>
+
         {renderFieldError('name')}
       </div>
 
@@ -155,18 +160,21 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
         <label className="label" htmlFor="comment-author-email">
           Author Email
         </label>
+
         <div className="control has-icons-left has-icons-right">
           <input
             id="comment-author-email"
             name="email"
             placeholder="email@test.com"
-            className={`input ${errors.email ? 'is-danger' : ''}`}
+            className={classNames('input', { 'is-danger': errors.email })}
             value={email}
             onChange={e => handleInputChange('email', e.target.value)}
           />
+
           <span className="icon is-small is-left">
             <i className="fas fa-envelope" />
           </span>
+
           {errors.email && (
             <span
               className="icon is-small is-right has-text-danger"
@@ -176,6 +184,7 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
             </span>
           )}
         </div>
+
         {renderFieldError('email')}
       </div>
 
@@ -184,6 +193,7 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
         <label className="label" htmlFor="comment-body">
           Comment Text
         </label>
+
         <div className="control">
           <textarea
             id="comment-body"
@@ -194,6 +204,7 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
             onChange={e => handleInputChange('body', e.target.value)}
           />
         </div>
+
         {renderFieldError('body')}
       </div>
 
@@ -202,12 +213,15 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
         <div className="control">
           <button
             type="submit"
-            className={`button is-link ${isSubmitting ? 'is-loading' : ''}`}
+            className={classNames('button', 'is-link', {
+              'is-loading': isSubmitting,
+            })}
             disabled={isSubmitting}
           >
             Add
           </button>
         </div>
+
         <div className="control">
           <button
             type="reset"
@@ -217,6 +231,7 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
             Clear
           </button>
         </div>
+
         <div className="control">
           <button
             type="button"

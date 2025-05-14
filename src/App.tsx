@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import classNames from 'classnames';
 import { client } from './utils/fetchClient';
 import { User } from './types/User';
 import { Post } from './types/Post';
@@ -144,7 +145,15 @@ export const App: React.FC = () => {
           {/* Right panel - Post details */}
           <div
             data-cy="Sidebar"
-            className={`tile is-parent is-8-desktop Sidebar ${selectedPost ? 'Sidebar--open' : ''}`}
+            className={classNames(
+              'tile',
+              'is-parent',
+              'is-8-desktop',
+              'Sidebar',
+              {
+                'Sidebar--open': selectedPost,
+              },
+            )}
           >
             <div className="tile is-child box is-success">
               {selectedPost && (

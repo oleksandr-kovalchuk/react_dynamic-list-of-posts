@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import classNames from 'classnames';
 import { User } from '../types/User';
 
 interface UserSelectorProps {
@@ -13,6 +14,7 @@ export const UserSelector: React.FC<UserSelectorProps> = ({
   onSelect,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Find selected user's name or use default
@@ -38,7 +40,9 @@ export const UserSelector: React.FC<UserSelectorProps> = ({
 
   const toggleDropdown = () => setIsOpen(prevState => !prevState);
 
-  const handleUserSelection = (userId: number) => {
+  const handleUserSelection = (e: React.MouseEvent, userId: number) => {
+    e.preventDefault();
+
     onSelect(userId);
     setIsOpen(false);
   };
@@ -47,7 +51,7 @@ export const UserSelector: React.FC<UserSelectorProps> = ({
     <div
       ref={dropdownRef}
       data-cy="UserSelector"
-      className={`dropdown ${isOpen ? 'is-active' : ''}`}
+      className={classNames('dropdown', { 'is-active': isOpen })}
     >
       <div className="dropdown-trigger">
         <button
@@ -58,6 +62,7 @@ export const UserSelector: React.FC<UserSelectorProps> = ({
           onClick={toggleDropdown}
         >
           <span>{displayName}</span>
+
           <span className="icon is-small">
             <i className="fas fa-angle-down" />
           </span>
@@ -73,11 +78,10 @@ export const UserSelector: React.FC<UserSelectorProps> = ({
               <a
                 key={user.id}
                 href={`#user-${user.id}`}
-                className={`dropdown-item ${isSelected ? 'is-active' : ''}`}
-                onClick={e => {
-                  e.preventDefault();
-                  handleUserSelection(user.id);
-                }}
+                className={classNames('dropdown-item', {
+                  'is-active': isSelected,
+                })}
+                onClick={e => handleUserSelection(e, user.id)}
               >
                 {user.name}
               </a>

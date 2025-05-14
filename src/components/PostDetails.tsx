@@ -67,7 +67,9 @@ export const PostDetails: React.FC<PostDetailsProps> = ({ post, onClose }) => {
         <h2 data-cy="PostTitle">
           #{post.id}: {post.title}
         </h2>
+
         <p data-cy="PostBody">{post.body}</p>
+
         <button
           type="button"
           className="button is-link is-light"
@@ -96,6 +98,7 @@ export const PostDetails: React.FC<PostDetailsProps> = ({ post, onClose }) => {
         {shouldShowComments && (
           <>
             <p className="title is-4">Comments:</p>
+
             {comments.map(comment => (
               <article
                 key={comment.id}
@@ -106,6 +109,7 @@ export const PostDetails: React.FC<PostDetailsProps> = ({ post, onClose }) => {
                   <a href={`mailto:${comment.email}`} data-cy="CommentAuthor">
                     {comment.name}
                   </a>
+
                   <button
                     data-cy="CommentDelete"
                     type="button"
@@ -114,6 +118,7 @@ export const PostDetails: React.FC<PostDetailsProps> = ({ post, onClose }) => {
                     onClick={() => handleDeleteComment(comment.id)}
                   />
                 </div>
+
                 <div className="message-body" data-cy="CommentBody">
                   {comment.body}
                 </div>

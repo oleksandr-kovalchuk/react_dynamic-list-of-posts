@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { Post } from '../types/Post';
 
 interface PostsListProps {
@@ -15,6 +16,7 @@ export const PostsList: React.FC<PostsListProps> = ({
   return (
     <div data-cy="PostsList">
       <p className="title">Posts:</p>
+
       <table className="table is-fullwidth is-striped is-hoverable is-narrow">
         <thead>
           <tr className="has-background-link-light">
@@ -23,11 +25,11 @@ export const PostsList: React.FC<PostsListProps> = ({
             <th> </th>
           </tr>
         </thead>
+
         <tbody>
           {posts.map(post => {
             const isSelected = post.id === selectedPostId;
             const buttonLabel = isSelected ? 'Close' : 'Open';
-            const buttonClass = `button is-link ${isSelected ? '' : 'is-light'}`;
 
             return (
               <tr key={post.id} data-cy="Post">
@@ -37,7 +39,9 @@ export const PostsList: React.FC<PostsListProps> = ({
                   <button
                     type="button"
                     data-cy="PostButton"
-                    className={buttonClass}
+                    className={classNames('button', 'is-link', {
+                      'is-light': !isSelected,
+                    })}
                     onClick={() => onSelectPost(post.id)}
                   >
                     {buttonLabel}
