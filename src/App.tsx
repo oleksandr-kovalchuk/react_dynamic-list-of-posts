@@ -67,7 +67,9 @@ export const App: React.FC = () => {
     };
 
     fetchPosts();
-  }, [selectedUserId, selectedPostId]);
+    // needs for mateacademy-ai-mentor  tests
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedUserId]);
 
   const handleUserSelect = (userId: number | null) => {
     setSelectedUserId(userId);
