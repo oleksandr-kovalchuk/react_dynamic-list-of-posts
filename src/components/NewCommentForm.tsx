@@ -119,6 +119,7 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
 
         <div className="control has-icons-left has-icons-right">
           <input
+            type="text"
             id="comment-author-name"
             name="name"
             placeholder="Name Surname"
@@ -151,6 +152,7 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
 
         <div className="control has-icons-left has-icons-right">
           <input
+            type="email"
             id="comment-author-email"
             name="email"
             placeholder="email@test.com"

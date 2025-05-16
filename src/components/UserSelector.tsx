@@ -31,9 +31,9 @@ export const UserSelector: React.FC<UserSelectorProps> = ({
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
 
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
   const toggleDropdown = () => setIsOpen(prevState => !prevState);
